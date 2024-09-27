@@ -8,11 +8,11 @@ interface Props {
 
 const BlockExpense = ({ expense }: Props) => {
   return (
-    <div className="space-y-2 items-center">
+    <div className="space-y-2 ">
       {expense &&
         expense.expenses.map((expense) => (
           <div
-            className="flex justify-between items-center px-10  w-[35rem] h-[3rem]  bg-purple-600  mx-12 rounded-lg"
+            className="flex justify-between items-center px-10  w-[35rem] h-[3rem] font-bold bg-purple-600  mx-12 rounded-lg"
             key={expense.name}
           >
             <Invoice

@@ -20,7 +20,7 @@ const LastExpenses = () => {
       <div className="font-bold text-lg text-center py-6 text-red-700">
         Despesas mais recentes:
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center py-10">
         <BlockExpense expense={lastExpenses!} />
       </div>
     </div>

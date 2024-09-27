@@ -1,3 +1,4 @@
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { APP_ROUTES } from "@/constants/app-routes";
 import { useAuthStore } from "@/store/auth.store";
 
@@ -43,14 +44,20 @@ export const Header = () => {
         </div>
 
         <div className="flex gap-10 items-center">
-          <div className="text-white font-medium">
-            {state?.userAuthenticated?.name}
-          </div>
-          <div
-            className="text-white font-medium cursor-pointer"
-            onClick={() => removeUserAuthenticated()}
-          >
-            Sair
+          <div className="flex gap-6 items-center">
+            <div className="text-white font-medium">
+              {state?.userAuthenticated?.name}
+            </div>
+
+            <div
+              className="text-white font-medium cursor-pointer"
+              onClick={() => removeUserAuthenticated()}
+            >
+              Sair
+            </div>
+            <Avatar>
+              <AvatarImage src="/images/image-user.png" />
+            </Avatar>
           </div>
         </div>
       </div>

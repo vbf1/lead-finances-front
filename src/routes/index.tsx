@@ -1,30 +1,45 @@
-import { HomePage } from "../components/pages/private/home";
-import { SignInPage } from "../components/pages/public/signIn";
-import { ERoutesPath } from "../enum/routes-path.enum";
-import { IRouteType } from "../interface/pages.interface";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { PrivateRoute } from "./private-route";
-
-const listPages: IRouteType = {
-  public: [{ path: ERoutesPath.SignIn, component: <SignInPage /> }],
-  private: [{ path: ERoutesPath.Home, component: <HomePage /> }],
-};
+import { HomePage } from "../pages/private/home";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { checkIsPublicRoute } from "@/functions/check-is-public-route";
+import { PrivateRoute } from "@/components/private-route";
+import { APP_ROUTES } from "@/constants/app-routes";
+import { SignInPage } from "@/pages/public/signIn";
+import { FinancesDetails } from "@/pages/private/finances-details";
 
 const AppRoutes = () => {
+  const { pathname } = useLocation();
+
+  const isPublicPage = checkIsPublicRoute(pathname);
+
+  const pagesPrivate = [
+    {
+      path: APP_ROUTES.private.dashboard,
+      component: <HomePage />,
+    },
+    {
+      path: APP_ROUTES.private.financesDetails,
+      component: <FinancesDetails />,
+    },
+  ];
+
   return (
-    <BrowserRouter>
-      <Routes>
-        {listPages.public.map((publicRoutes) => (
-          <Route path={publicRoutes.path} element={publicRoutes.component} />
+    <>
+      {isPublicPage && (
+        <Routes>
+          <Route path={APP_ROUTES.public.signIn} element={<SignInPage />} />
+        </Routes>
+      )}
+      {!isPublicPage &&
+        pagesPrivate.map((pagesPrivate) => (
+          <Routes>
+            <Route
+              path={pagesPrivate.path}
+              element={<PrivateRoute>{pagesPrivate.component}</PrivateRoute>}
+            />
+          </Routes>
         ))}
-        {listPages.private.map((privateRoutes) => (
-          <Route
-            path={privateRoutes.path}
-            element={<PrivateRoute>{privateRoutes.component}</PrivateRoute>}
-          />
-        ))}
-      </Routes>
-    </BrowserRouter>
+      {/* <Route path="/finances-details" Component={FinancesDetails} /> */}
+    </>
   );
 };
 

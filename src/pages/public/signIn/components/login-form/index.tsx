@@ -1,10 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useUsersStore } from "../../../../../../store/users";
-import { IUser } from "../../../../../../interface/user.interface";
-import { useNavigate } from "react-router-dom";
+import { IUser } from "../../../../../interface/user.interface";
 import { useToast } from "@/hooks/use-toast";
+import axios from "axios";
+import { useAuthStore } from "@/store/auth.store";
+import { ResponseAuth } from "@/interface/auth.type";
+import { APP_ROUTES } from "@/constants/app-routes";
+import { useNavigate } from "react-router-dom";
 
 const UserFormSchema = z.object({
   email: z
@@ -18,10 +21,10 @@ const UserFormSchema = z.object({
 type userFormSchemaType = z.infer<typeof UserFormSchema>;
 
 const LoginForm = () => {
-  const { toast } = useToast();
   const {
-    actions: { setAuth },
-  } = useUsersStore();
+    actions: { addUserAuthenticated },
+  } = useAuthStore();
+  const { toast } = useToast();
   const navigation = useNavigate();
 
   const {
@@ -32,14 +35,27 @@ const LoginForm = () => {
     resolver: zodResolver(UserFormSchema),
   });
 
-  const submitForm = (data: IUser) => {
-    if (data.email === "email@email.com" && data.password === "123456") {
-      setAuth(data);
-      navigation("/");
-    } else {
-      toast({
-        title: "Usuário ou Senha inválidos",
-        description: "Por favor tente novamente!",
+  const submitForm = async ({ email, password }: IUser) => {
+    try {
+      const response: ResponseAuth = await axios.post(
+        "http://localhost:8080/signin",
+        {
+          email,
+          password,
+        }
+      );
+
+      if (response) {
+        addUserAuthenticated({
+          userAuthenticated: response.data.existUser!,
+          token: response.data.accessToken!,
+        });
+      }
+      navigation(APP_ROUTES.private.dashboard);
+    } catch (err: any) {
+      return toast({
+        title: `${err.name}`,
+        description: `${err.name}`,
         className: "bg-purple-600 text-white ",
         duration: 3000,
       });

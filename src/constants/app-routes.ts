@@ -1,4 +1,4 @@
-export const APP_ROUTES = {
+const APP_ROUTES = {
   private: {
     dashboard: "/dashboard",
     financesDetails: "/finances-details",
@@ -7,3 +7,10 @@ export const APP_ROUTES = {
     signIn: "/",
   },
 };
+
+const EXPENSE_OPERATION = {
+  Expense: "Despesa",
+  Renevue: "Receita",
+};
+
+export { APP_ROUTES, EXPENSE_OPERATION };

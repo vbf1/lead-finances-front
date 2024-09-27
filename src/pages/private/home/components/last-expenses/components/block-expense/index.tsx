@@ -1,6 +1,7 @@
 import { ILastExpense } from "@/interface/user-expense.interface";
 import { Invoice } from "@phosphor-icons/react";
 import currency from "currency.js";
+import { ArrowDown } from "lucide-react";
 
 interface Props {
   expense: ILastExpense;
@@ -12,21 +13,19 @@ const BlockExpense = ({ expense }: Props) => {
       {expense &&
         expense.expenses.map((expense) => (
           <div
-            className="flex justify-between items-center px-10  w-[35rem] h-[3rem] font-bold bg-purple-600  mx-12 rounded-lg"
+            className="flex justify-between items-center px-10  w-[35rem] h-[3rem] border border-slate-400 mx-12 rounded-lg"
             key={expense.name}
           >
-            <Invoice
-              weight="fill"
-              height={35}
-              width={35}
-              className="text-white"
-            />
-            <div className="text-white font-bold flex gap-2">
-              <div>Despesa:</div> <div>{expense.name}</div>
+            <div className="bg-red-500 p-1 rounded-full">
+              <ArrowDown className="text-white" />
             </div>
-            <div className="text-white font-bold flex gap-2">
+            <div className="text-purple-950  flex gap-2">
+              <div>Despesa:</div>{" "}
+              <div className="font-bold">{expense.name}</div>
+            </div>
+            <div className="text-purple-950  flex gap-2">
               <div>Valor:</div>
-              <div>
+              <div className="font-bold">
                 {currency(Number(expense.value) / 100, {
                   symbol: "R$ ",
                   decimal: ",",

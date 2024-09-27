@@ -5,9 +5,10 @@ import { IUser } from "../../../../../interface/user.interface";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import { useAuthStore } from "@/store/auth.store";
-import { ResponseAuth } from "@/interface/auth.type";
+
 import { APP_ROUTES } from "@/constants/app-routes";
 import { useNavigate } from "react-router-dom";
+import { ResponseAuth } from "@/interface/auth.interface";
 
 const UserFormSchema = z.object({
   email: z

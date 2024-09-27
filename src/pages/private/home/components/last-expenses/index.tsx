@@ -16,10 +16,7 @@ const LastExpenses = () => {
   }, [state]);
 
   return (
-    <div className="bg-white w-[45rem] h-[27rem] rounded-3xl">
-      <div className="font-bold text-lg text-center py-6 text-red-700">
-        Despesas mais recentes:
-      </div>
+    <div className="bg-white w-[45rem] h-[20rem] rounded-3xl">
       <div className="flex justify-center py-10">
         <BlockExpense expense={lastExpenses!} />
       </div>
